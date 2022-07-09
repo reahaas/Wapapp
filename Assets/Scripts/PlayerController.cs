@@ -5,12 +5,10 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public MovementJoystickController movementJoystickController;
+    public float movementSpeed;
     Rigidbody2D rb;
 
-    float movementSpeed = 4f;
-
-    public float runSpeed = 20.0f;
-
+    
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
