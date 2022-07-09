@@ -4,37 +4,29 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public MovementJoystickController movementJoystickController;
+    Rigidbody2D rb;
 
-    Rigidbody2D body;
-
-    float horizontal;
-    float vertical;
-    float walkSpeed = 4f;
-    float moveLimiter = 0.7f;
+    float movementSpeed = 4f;
 
     public float runSpeed = 20.0f;
 
     void Start()
     {
-        body = GetComponent<Rigidbody2D>();
-    }
-
-    void Update()
-    {
-        // Gives a value between -1 and 1
-        horizontal = Input.GetAxisRaw("Horizontal"); // -1 is left
-        vertical = Input.GetAxisRaw("Vertical"); // -1 is down
+        rb = GetComponent<Rigidbody2D>();
     }
 
     void FixedUpdate()
     {
-        if (horizontal != 0 && vertical != 0) // Check for diagonal movement
+        if(movementJoystickController.joystickVec.y != 0)
         {
-            // limit movement speed diagonally, so you move at 70% speed
-            horizontal *= moveLimiter;
-            vertical *= moveLimiter;
+            rb.velocity = new Vector2(movementJoystickController.joystickVec.x * movementSpeed,
+                movementJoystickController.joystickVec.y * movementSpeed);
+        }
+        else
+        {
+            rb.velocity = Vector2.zero;
         }
 
-        body.velocity = new Vector2(horizontal * runSpeed, vertical * runSpeed);
     }
 }
